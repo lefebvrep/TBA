@@ -1,5 +1,4 @@
 # Define the Player class.
-from config import DEBUG
 
 class Player():
     
@@ -74,8 +73,6 @@ class Player():
         """Prend un item de la pièce courante et le met dans l'inventaire du joueur
         si le poids total ne dépasse pas max_weight.
         """
-        if DEBUG:
-            print(f"DEBUG: tentative de prise de {item_key}")
         if self.current_room is None:
             print("\nVous n'êtes dans aucune pièce.\n")
             return False
@@ -105,29 +102,6 @@ class Player():
         self.inventory[key] = item
         print(f"\nVous avez pris : {key}\n")
         return True
-    
-    def drop(self, item_key: str) -> bool:
-        """
-        Dépose un item de l'inventaire du joueur dans la pièce courante.
-        Usage attendu : drop <nom_item>
-        """
-        if self.current_room is None:
-            print("\nVous n'êtes dans aucune pièce.\n")
-            return False
-
-        key = item_key.strip()
-
-        if key not in self.inventory:
-            print(f"\nVous n'avez pas '{key}' dans votre inventaire.\n")
-            return False
-
-    # Transfert joueur -> pièce
-        item = self.inventory.pop(key)
-        self.current_room.inventory[key] = item
-
-        print(f"\nVous avez posé : {key}\n")
-        return True
-
 
 
 

@@ -9,7 +9,6 @@ from actions import Actions
 from character import Character
 from item import Item
 
-from config import DEBUG
 
 class Game:
 
@@ -46,13 +45,9 @@ class Game:
         back = Command("back", " : revenir dans la pièce précédente", Actions.back, 0)
         self.commands["back"] = back
 
-        drop = Command("drop"," : poser un objet de l'inventaire dans la pièce",Actions.drop,1)
-        self.commands["drop"]=drop
 
-        talk = Command("talk"," <nom> : parler à un personnage",Actions.talk,1)
-        self.commands["talk"]=talk
 
-       
+        
         # Setup rooms
 
         forest = Room("Forest", " une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
@@ -107,14 +102,10 @@ class Game:
 
         guardian = Character("Gardien","un homme sévère en armure",forest,["Personne ne passe sans autorisation.", "Faites demi-tour."])
         witch = Character("Sorcière","une vieille femme au regard perçant",cottage,["Bienvenue, voyageur.", "Méfiez-vous du marécage."])
-        gandalf = Character("Gandalf","un magicien blanc",forest,["Je suis Gandalf","Abracadabra !"])
-
-        forest.characters["gardien"] = guardian
-        cottage.characters["sorcière"] = witch
-        forest.characters["gandalf"] = gandalf 
+        forest.characters["Gardien"] = guardian
+        cottage.characters["Sorcière"] = witch
         self.characters.append(guardian)
         self.characters.append(witch)
-        self.characters.append(gandalf)
 
         # Setup player and starting room
         self.player = Player(input("\nEntrez votre nom: "))
@@ -127,13 +118,10 @@ class Game:
         # Loop until the game is finished
         while not self.finished:
             # Get the command from the player
-            cmd = input("> ")
-            self.process_command(cmd)
-            command_word = cmd.split(" ")[0] if cmd.strip() else ""
-            if command_word not in ["look", "help", "check", "talk"]:
-                moved = self.move_characters()
-                if moved:
-                    print("\n(Info) PNJ déplacés :", ", ".join(moved), "\n")
+            self.process_command(input("> "))
+            moved = self.move_characters()
+            if moved:
+                print("\n(Info) PNJ déplacés :", ", ".join(moved), "\n")
         return None
 
     # Process the command entered by the player

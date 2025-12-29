@@ -234,27 +234,3 @@ class Actions:
 
         print(player.current_room.get_long_description())
         return True
-    
-    def talk(game, list_of_words, number_of_parameters):
-        """
-        Parler à un personnage non joueur présent dans la pièce.
-        Usage: talk <nom_personnage>
-        """
-        l = len(list_of_words)
-        if l != number_of_parameters + 1:
-            command_word = list_of_words[0]
-            print(MSG1.format(command_word=command_word))
-            return False
-
-        player = game.player
-        room = player.current_room
-        name = list_of_words[1].lower()
-
-        if name not in room.characters:
-            print(f"\nIl n'y a pas de personnage nommé '{name}' ici.\n")
-            return False
-
-        character = room.characters[name]
-        print(character.get_msg())
-        return True
-
